@@ -9,12 +9,12 @@ namespace CloseTalk.Persistence.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder
-                .HasAlternateKey(e => e.UserName)
-                .HasName("AlternateKey_UserName");
+                .HasIndex(e => e.UserName).IsUnique()
+                .HasName("UniqueKey_UserName");
 
             builder.Property(e => e.UserId)
-                .HasMaxLength(6)
-                .ValueGeneratedNever();
+                .UseSqlServerIdentityColumn()
+                .HasMaxLength(6);
 
             builder.Property(e => e.FirstName)
                 .HasMaxLength(20);

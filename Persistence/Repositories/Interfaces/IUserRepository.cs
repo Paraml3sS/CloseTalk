@@ -8,7 +8,7 @@ namespace CloseTalk.Persistence.Repositories.Interfaces
     {
         Task<IEnumerable<User>> GetAsync();
         Task<User> GetAsync(int id);
-        Task<int> AddUserAsync(User user);
+        int AddUserAsync(User user);
         Task<int> UpdateUserAsync(User user);
         Task<int> DeleteUserAsync(int id);
     }

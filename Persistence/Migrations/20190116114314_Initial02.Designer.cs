@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190112152652_Initial")]
-    partial class Initial
+    [Migration("20190116114314_Initial02")]
+    partial class Initial02
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,9 +24,11 @@ namespace Persistence.Migrations
             modelBuilder.Entity("CloseTalk.Domain.Models.User", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasMaxLength(6);
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(6)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("AccountRegistered")
+                    b.Property<DateTime?>("AccountRegistered")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("getdate()");
 
@@ -44,13 +46,14 @@ namespace Persistence.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(15);
 
                     b.HasKey("UserId");
 
-                    b.HasAlternateKey("UserName")
-                        .HasName("AlternateKey_UserName");
+                    b.HasIndex("UserName")
+                        .IsUnique()
+                        .HasName("UniqueKey_UserName")
+                        .HasFilter("[UserName] IS NOT NULL");
 
                     b.ToTable("Users");
                 });

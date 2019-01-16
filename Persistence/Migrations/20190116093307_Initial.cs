@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
@@ -11,13 +12,14 @@ namespace Persistence.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(maxLength: 6, nullable: false),
+                    UserId = table.Column<int>(maxLength: 6, nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(maxLength: 20, nullable: true),
                     LastName = table.Column<string>(maxLength: 30, nullable: true),
                     DoB = table.Column<DateTime>(type: "datetime", nullable: true),
                     UserName = table.Column<string>(maxLength: 15, nullable: false),
                     EmailAddress = table.Column<string>(maxLength: 30, nullable: false),
-                    AccountRegistered = table.Column<DateTime>(nullable: false, defaultValueSql: "getdate()")
+                    AccountRegistered = table.Column<DateTime>(nullable: true, defaultValueSql: "getdate()")
                 },
                 constraints: table =>
                 {

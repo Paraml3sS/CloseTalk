@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190114164404_Initial01")]
+    [Migration("20190116094434_Initial01")]
     partial class Initial01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,9 @@ namespace Persistence.Migrations
             modelBuilder.Entity("CloseTalk.Domain.Models.User", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasMaxLength(6);
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(6)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("AccountRegistered")
                         .ValueGeneratedOnAdd()

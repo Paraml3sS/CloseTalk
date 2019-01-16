@@ -4,14 +4,16 @@ using CloseTalk.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190116093307_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,6 @@ namespace Persistence.Migrations
             modelBuilder.Entity("CloseTalk.Domain.Models.User", b =>
                 {
                     b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(6)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -44,14 +45,13 @@ namespace Persistence.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(15);
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("UserName")
-                        .IsUnique()
-                        .HasName("UniqueKey_UserName")
-                        .HasFilter("[UserName] IS NOT NULL");
+                    b.HasAlternateKey("UserName")
+                        .HasName("AlternateKey_UserName");
 
                     b.ToTable("Users");
                 });

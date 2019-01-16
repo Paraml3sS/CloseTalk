@@ -40,11 +40,11 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post([FromBody] User user)
+        public ActionResult<int> Post([FromBody] User user)
         {
             var localUser = user.DeepClone();
 
-            return await _userRepository.AddUserAsync(localUser);
+            return _userRepository.AddUserAsync(localUser);
         }
 
         [HttpPut]

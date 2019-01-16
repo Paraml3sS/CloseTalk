@@ -1,10 +1,12 @@
 ﻿using Domain.Interfaces;
+using System;
 
 namespace CloseTalk.Domain.Models
 {
     public partial class User : ICloneable<User>
     {
         public User DeepClone() =>
+
             new User {
                 UserId = this.UserId,
                 FirstName = this.FirstName,
@@ -12,7 +14,9 @@ namespace CloseTalk.Domain.Models
                 DoB = this.DoB.Value,
                 UserName = this.UserName,
                 EmailAddress = this.EmailAddress,
-                AccountRegistered = this.AccountRegistered.Value
+                AccountRegistered = this.AccountRegistered.HasValue 
+                    ? this.AccountRegistered.Value 
+                    : DateTime.Now
             };
     }
 }

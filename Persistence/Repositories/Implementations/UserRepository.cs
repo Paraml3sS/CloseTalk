@@ -15,12 +15,12 @@ namespace CloseTalk.Persistence.Repositories.Implementations
 
         public async Task<User> GetAsync(int id) => await EntitySet.FindAsync(id);
 
-        public async Task<int> AddUserAsync(User user)
+        public int AddUserAsync(User user)
         {
             if (user.UserId == 0)
                 EntitySet.Add(user);
 
-            return await SaveChanges();
+            return Context.SaveChanges();
         }
 
         public async Task<int> UpdateUserAsync(User user)
@@ -35,6 +35,8 @@ namespace CloseTalk.Persistence.Repositories.Implementations
                 entity.DoB = user.DoB;
                 entity.UserName = user.UserName;
                 entity.EmailAddress = user.EmailAddress;
+
+                EntitySet.Update(entity);
             }
 
             return await SaveChanges();
@@ -42,12 +44,12 @@ namespace CloseTalk.Persistence.Repositories.Implementations
 
         public async Task<int> DeleteUserAsync(int id)
         {
-            var entity = Context.Users
+            var entity = EntitySet
                 .FirstOrDefault(u => u.UserId == id);
 
             if (entity != null)
             {
-                Context.Users.Remove(entity);
+                EntitySet.Remove(entity);
             }
 
             return await SaveChanges();
