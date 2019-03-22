@@ -14,9 +14,7 @@ namespace CloseTalk.Domain.Models
                 DoB = this.DoB.Value,
                 UserName = this.UserName,
                 EmailAddress = this.EmailAddress,
-                AccountRegistered = this.AccountRegistered.HasValue 
-                    ? this.AccountRegistered.Value 
-                    : DateTime.Now
+                AccountRegistered = this.AccountRegistered ?? DateTime.Now
             };
     }
 }

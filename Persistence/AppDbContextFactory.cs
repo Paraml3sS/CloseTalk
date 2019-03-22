@@ -7,7 +7,7 @@ namespace CloseTalk.Persistence
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            var connectionString = @"Data Source=DESKTOP-22TA5GA\YBSQL;Database=CloseTalkDb;Integrated Security=True;App=EntityFramework";
+            var connectionString = "Data Source=(LocalDb)\\MSSQLLocalDB;Database=CloseTalkDb;Integrated Security=True;App=EntityFramework";
 
             return new AppDbContext(
                     new DbContextOptionsBuilder<AppDbContext>()

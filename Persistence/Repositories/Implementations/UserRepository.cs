@@ -1,26 +1,25 @@
-﻿using CloseTalk.Domain.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CloseTalk.Domain.Models;
 using CloseTalk.Persistence.Repositories.Base;
 using CloseTalk.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CloseTalk.Persistence.Repositories.Implementations
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public async  Task<IEnumerable<User>> GetAsync() =>  await EntitySet.ToListAsync();
+        public async Task<IEnumerable<User>> GetAsync() =>  await EntitySet.ToListAsync();
 
         public async Task<User> GetAsync(int id) => await EntitySet.FindAsync(id);
 
-        public int AddUserAsync(User user)
+        public async Task<int> AddUserAsync(User user)
         {
             if (user.UserId == 0)
                 EntitySet.Add(user);
 
-            return Context.SaveChanges();
+            return await SaveChanges();
         }
 
         public async Task<int> UpdateUserAsync(User user)

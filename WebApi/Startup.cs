@@ -22,7 +22,7 @@ namespace WebApi
         {
             services.AddMvc();
             services.AddDbContextPool<AppDbContext>(options => options
-                .UseSqlServer(Configuration["Data:Default:ConnectionString"]));
+                .UseSqlServer(Configuration["Data:Work:ConnectionString"]));
             
             services.AddTransient<IUserRepository, UserRepository>();
         }

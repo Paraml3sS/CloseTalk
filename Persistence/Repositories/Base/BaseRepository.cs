@@ -12,19 +12,19 @@ namespace CloseTalk.Persistence.Repositories.Base
         protected readonly DbSet<T> EntitySet;
 
 
-        public BaseRepository(AppDbContext context)
+        protected BaseRepository(AppDbContext context)
         {
             Context = context;
             EntitySet = Context.Set<T>();
         }
 
-        internal protected async Task<int> SaveChanges()
+        internal async Task<int> SaveChanges()
         {
             try
             {
                 return await Context.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -40,7 +40,7 @@ namespace CloseTalk.Persistence.Repositories.Base
             {
                 if (disposing)
                 {
-                    Context.Dispose();
+                    Context?.Dispose();
                 }
 
                 disposedValue = true;
